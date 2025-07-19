@@ -1,4 +1,4 @@
-package com.example.battleship.views.alert;
+package com.example.ada1fp.alert;
 
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;

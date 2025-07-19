@@ -1,0 +1,38 @@
+package com.example.ada1fp.models;
+
+public class task {
+    private static int idCounter = 0; // Static counter for generating unique IDs
+    private final int id; // Unique ID for each task
+    private int priority;
+    private String description;
+
+    // Constructor
+    public task(int priority, String description) {
+        this.id = ++idCounter; // Increment the counter and assign it as the ID
+        this.priority = priority;
+        this.description = description;
+    }
+
+    // Getter for id
+    public int getId() {
+        return id;
+    }
+
+    // Getter and Setter for priority
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+
+    // Getter and Setter for description
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}
