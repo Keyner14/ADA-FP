@@ -1,12 +1,16 @@
 package com.example.ada1fp.models;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class heap {
     private final ArrayList<task> heap;
 
     public heap() {
         this.heap = new ArrayList<>();
+    }
+    public List<task> getHeap() {
+        return new ArrayList<>(heap); // Devuelve una copia del ArrayList para evitar modificaciones externas
     }
 
     // Insertar un elemento en el heap
@@ -23,17 +27,17 @@ public class heap {
         return heap.get(0);
     }
 
-    // Eliminar el máximo
     public task extractMax() {
         if (heap.isEmpty()) {
             throw new IllegalStateException("Heap is empty");
         }
-        task max = heap.get(0);
-        heap.set(0, heap.remove(heap.size() - 1));
-        if (!heap.isEmpty()) {
-            heapifyDown(0);
+        if (heap.size() == 1) {
+            return heap.remove(0); // Si solo hay un elemento, se elimina y se devuelve.
         }
-        return max;
+        task max = heap.get(0); // Se guarda el elemento con mayor prioridad (raíz).
+        heap.set(0, heap.remove(heap.size() - 1)); // Se reemplaza la raíz con el último elemento.
+        heapifyDown(0); // Se restaura la propiedad del heap.
+        return max; // Se devuelve el elemento eliminado.
     }
 
     // Heapify hacia arriba
@@ -71,21 +75,6 @@ public class heap {
             }
         }
     }
-
-    // Obtener el arreglo completo del heap
-    public ArrayList<task> getHeap() {
-        return new ArrayList<>(heap); // Devuelve una copia para evitar modificaciones externas
-    }
-
-    // Incrementar la clave de un elemento en el heap
-    public void increaseKey(int index, int newPriority) {
-        if (newPriority < heap.get(index).getPriority()) {
-            throw new IllegalArgumentException("New priority must be greater than or equal to the current priority");
-        }
-        heap.get(index).setPriority(newPriority);
-        heapifyUp(index);
-    }
-
     // Intercambiar dos elementos en el array
     private void swap(int i, int j) {
         task temp = heap.get(i);
@@ -103,14 +92,4 @@ public class heap {
         return heap.isEmpty();
     }
 
-    public void maintainHeap() {
-        // Recorre el heap desde el último elemento hacia arriba para aplicar heapifyUp
-        for (int i = heap.size() - 1; i >= 0; i--) {
-            heapifyUp(i);
-        }
-        // Recorre el heap desde la raíz hacia abajo para aplicar heapifyDown
-        for (int i = 0; i < heap.size(); i++) {
-            heapifyDown(i);
-        }
-    }
 }
