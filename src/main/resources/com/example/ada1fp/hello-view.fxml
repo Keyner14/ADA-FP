@@ -1,52 +1,102 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.text.*?>
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
-<VBox xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ada1fp.controllers.heapController" spacing="10">
-   <padding>
-      <Insets top="10" right="10" bottom="10" left="10"/>
-   </padding>
-
-   <Text text="Gestor de Tareas" style="-fx-font-size: 20px; -fx-font-weight: bold;"/>
-
-   <GridPane hgap="10" vgap="10">
-      <columnConstraints>
-         <ColumnConstraints halignment="RIGHT" minWidth="100"/>
-         <ColumnConstraints halignment="LEFT" minWidth="200"/>
-      </columnConstraints>
-
-      <Label text="Descripción:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-      <TextField fx:id="descriptionField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-
-      <Label text="Prioridad:" GridPane.rowIndex="1" GridPane.columnIndex="0"/>
-      <ComboBox fx:id="priorityComboBox" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-
-      <Label text="Fecha vencimiento:" GridPane.rowIndex="2" GridPane.columnIndex="0"/>
-      <DatePicker fx:id="expirationDatePicker" GridPane.rowIndex="2" GridPane.columnIndex="1"/>
-
-      <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
-         <Button text="Agregar Tarea" onAction="#onAddTaskClick"/>
-         <Button text="Completar Tarea" onAction="#onCompleteTaskClick"/>
-      </HBox>
-   </GridPane>
-
-   <Separator/>
-
-   <GridPane hgap="10" vgap="10">
-      <columnConstraints>
-         <ColumnConstraints halignment="RIGHT" minWidth="100"/>
-         <ColumnConstraints halignment="LEFT" minWidth="200"/>
-      </columnConstraints>
-
-      <Label text="Buscar por ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-      <TextField fx:id="searchIdField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-      <Button text="Buscar" onAction="#onSearchTaskClick" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
-   </GridPane>
-
-   <Separator/>
-
-   <TextArea fx:id="outputArea" editable="false" style="-fx-font-family: monospace;" VBox.vgrow="ALWAYS"/>
+<VBox alignment="CENTER" prefHeight="621.0" prefWidth="751.0" spacing="20.0" xmlns="http://javafx.com/javafx/22" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.ada1fp.controllers.heapController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <Label text="COLA DE PRIORIDAD">
+      <font>
+         <Font size="49.0" />
+      </font>
+   </Label>
+   <HBox alignment="CENTER" prefHeight="317.0" prefWidth="622.0" spacing="20.0">
+      <children>
+         <VBox alignment="CENTER" prefHeight="210.0" prefWidth="258.0">
+            <children>
+               <Label text="INSERTAR A LA COLA DE PRIORIDAD">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+                  <padding>
+                     <Insets bottom="15.0" />
+                  </padding>
+               </Label>
+               <Label prefHeight="18.0" prefWidth="149.0" text="DIGITE UNA DESCRIPCION" />
+               <TextField fx:id="textFieldDescription" alignment="CENTER" prefHeight="26.0" prefWidth="103.0" />
+               <Label prefHeight="52.0" prefWidth="186.0" text="DIGITE UNA PRIORIDAD DEL 1 AL 10 (DONDE 10 ES MAXIMA PRIORIDAD)" textAlignment="CENTER" wrapText="true" />
+               <TextField fx:id="textFieldPriority1" />
+               <Label text="DIGITE UNA FECHA DE VENCIMIENTO" />
+               <TextField fx:id="textFieldExpirationDate" />
+               <Button mnemonicParsing="false" onAction="#OnActionInsertButton" text="INSERTAR">
+                  <VBox.margin>
+                     <Insets top="10.0" />
+                  </VBox.margin>
+               </Button>
+            </children>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="206.0" prefWidth="294.0" spacing="10.0">
+            <children>
+               <Label prefHeight="36.0" prefWidth="287.0" text="OBTENER TAREA CON MAYOR PRIORIDAD">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+                  <padding>
+                     <Insets bottom="20.0" />
+                  </padding>
+               </Label>
+               <TextField fx:id="textFieldGetMaxPriority" alignment="CENTER" prefHeight="26.0" prefWidth="103.0" />
+               <Button mnemonicParsing="false" onAction="#OnActionGetMaxPriorityButton" text="OBTENER" />
+            </children>
+         </VBox>
+      </children>
+   </HBox>
+   <HBox alignment="CENTER" prefHeight="138.0" prefWidth="622.0">
+      <children>
+         <VBox alignment="CENTER" prefHeight="134.0" prefWidth="259.0">
+            <children>
+               <Label text="OBTENER PRIORIDADES ">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+               </Label>
+               <TextArea fx:id="textFieldGetArray" prefHeight="66.0" prefWidth="154.0">
+                  <VBox.margin>
+                     <Insets bottom="20.0" />
+                  </VBox.margin>
+               </TextArea>
+               <Button mnemonicParsing="false" onAction="#OnActionGetArray" text="OBTENER " />
+            </children>
+         </VBox>
+         <VBox alignment="CENTER" prefHeight="138.0" prefWidth="316.0" spacing="10.0">
+            <children>
+               <Label prefHeight="32.0" prefWidth="290.0" text="ELIMINAR TAREA CON MAYOR PRIORIDAD" textAlignment="CENTER">
+                  <font>
+                     <Font size="15.0" />
+                  </font>
+                  <padding>
+                     <Insets bottom="10.0" />
+                  </padding>
+               </Label>
+               <Button mnemonicParsing="false" onAction="#OnActionDeleteButton" text="ELIMINAR" />
+            </children>
+            <HBox.margin>
+               <Insets />
+            </HBox.margin>
+         </VBox>
+      </children>
+   </HBox>
+   <HBox alignment="BOTTOM_RIGHT" prefHeight="34.0" prefWidth="622.0">
+      <children>
+         <Button mnemonicParsing="false" onAction="#OnActionRestartButton" text="REINICIAR" />
+      </children>
+   </HBox>
 </VBox>
