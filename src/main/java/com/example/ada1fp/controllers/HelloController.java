@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import java.util.List;
 
 public class HelloController {
-    private final heap taskHeap = new heap();
+    private heap taskHeap = new heap();
     private final AVLTree taskTree = new AVLTree();
     private final AlertBox alertBox = new AlertBox();
 
@@ -24,6 +24,8 @@ public class HelloController {
     private TextArea outputArea;
     @FXML
     private TextField searchIdField;
+    @FXML
+    private TextField completeByIdField;
 
     @FXML
     public void initialize() {
@@ -35,9 +37,10 @@ public class HelloController {
         try {
             String description = descriptionField.getText();
             Integer priority = priorityComboBox.getValue();
-            String expirationDate = expirationDatePicker.getValue().toString();
+            String expirationDate = expirationDatePicker.getValue() != null ?
+                    expirationDatePicker.getValue().toString() : "";
 
-            if (description.isEmpty() || priority == null || expirationDate == null) {
+            if (description.isEmpty() || priority == null || expirationDate.isEmpty()) {
                 alertBox.showAlert("Error", "Campos vacíos", "Por favor complete todos los campos", Alert.AlertType.ERROR);
                 return;
             }
@@ -55,7 +58,7 @@ public class HelloController {
     }
 
     @FXML
-    protected void onCompleteTaskClick() {
+    protected void onCompleteHighestPriorityTaskClick() {
         try {
             if (taskHeap.isEmpty()) {
                 alertBox.showAlert("Error", "Heap vacío", "No hay tareas para completar", Alert.AlertType.ERROR);
@@ -67,9 +70,40 @@ public class HelloController {
 
             updateOutput();
             alertBox.showAlert("Éxito", "Tarea completada",
-                    "Tarea completada: " + completedTask.getDescription(), Alert.AlertType.INFORMATION);
+                    "Tarea más prioritaria completada: " + completedTask.getDescription(),
+                    Alert.AlertType.INFORMATION);
         } catch (Exception e) {
             alertBox.showAlert("Error", "Error al completar tarea", e.getMessage(), Alert.AlertType.ERROR);
+        }
+    }
+
+    @FXML
+    protected void onCompleteTaskByIdClick() {
+        try {
+            int id = Integer.parseInt(completeByIdField.getText());
+            task taskToComplete = taskTree.search(id);
+
+            if (taskToComplete == null) {
+                alertBox.showAlert("Error", "Tarea no encontrada",
+                        "No existe una tarea con ID: " + id, Alert.AlertType.ERROR);
+                return;
+            }
+
+            boolean removedFromHeap = removeFromHeap(taskToComplete);
+            if (!removedFromHeap) {
+                alertBox.showAlert("Error", "Tarea no encontrada",
+                        "La tarea no estaba en la cola de prioridad", Alert.AlertType.ERROR);
+                return;
+            }
+
+            taskTree.delete(id);
+
+            updateOutput();
+            alertBox.showAlert("Éxito", "Tarea completada",
+                    "Tarea completada: " + taskToComplete.getDescription(),
+                    Alert.AlertType.INFORMATION);
+        } catch (NumberFormatException e) {
+            alertBox.showAlert("Error", "ID inválido", "Por favor ingrese un número válido", Alert.AlertType.ERROR);
         }
     }
 
@@ -94,11 +128,39 @@ public class HelloController {
         }
     }
 
+    @FXML
+    protected void onShowHighestPriorityTaskClick() {
+        if (taskHeap.isEmpty()) {
+            alertBox.showAlert("Información", "No hay tareas",
+                    "No hay tareas pendientes", Alert.AlertType.INFORMATION);
+            return;
+        }
+
+        task highestPriorityTask = taskHeap.getMax();
+        outputArea.setText("Tarea más prioritaria:\n" +
+                "ID: " + highestPriorityTask.getId() + "\n" +
+                "Descripción: " + highestPriorityTask.getDescription() + "\n" +
+                "Prioridad: " + highestPriorityTask.getPriority() + "\n" +
+                "Fecha vencimiento: " + highestPriorityTask.getExpirationDate());
+    }
+
+    private boolean removeFromHeap(task taskToRemove) {
+        List<task> tasks = taskHeap.getHeap();
+        boolean found = tasks.removeIf(t -> t.getId() == taskToRemove.getId());
+
+        if (found) {
+            heap newHeap = new heap();
+            tasks.forEach(newHeap::insert);
+            this.taskHeap = newHeap;
+        }
+
+        return found;
+    }
+
     private void updateOutput() {
         StringBuilder sb = new StringBuilder();
         sb.append("Tareas pendientes (ordenadas por prioridad):\n");
 
-        // mostrar las tareas en orden de prioridad sin eliminarlas
         List<task> tasks = taskHeap.getHeap();
         tasks.sort((t1, t2) -> Integer.compare(t2.getPriority(), t1.getPriority()));
 
