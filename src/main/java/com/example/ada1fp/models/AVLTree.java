@@ -173,4 +173,8 @@ public class AVLTree {
 
         return y;
     }
+
+    public int getHeigth() {
+        return height(root);
+    }
 }

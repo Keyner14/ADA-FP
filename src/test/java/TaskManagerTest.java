@@ -100,9 +100,8 @@ public class TaskManagerTest {
         System.out.println("Resultado: Árbol se rebalanceó automáticamente\n");
     }
 
-    // Método auxiliar para obtener altura (simplificado)
+    // Método para obtener la altura del árbol
     private int getTreeHeight(AVLTree tree) {
-        // Implementar usando reflexión o añadir método público en AVLTree
-        return 4; // Ejemplo simplificado
+        return tree.getHeigth();
     }
 }
