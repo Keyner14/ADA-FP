@@ -29,7 +29,6 @@
 
       <HBox spacing="10" GridPane.rowIndex="3" GridPane.columnIndex="1">
          <Button text="Agregar Tarea" onAction="#onAddTaskClick"/>
-         <Button text="Completar Tarea" onAction="#onCompleteTaskClick"/>
       </HBox>
    </GridPane>
 
@@ -45,6 +44,26 @@
       <TextField fx:id="searchIdField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
       <Button text="Buscar" onAction="#onSearchTaskClick" GridPane.rowIndex="1" GridPane.columnIndex="1"/>
    </GridPane>
+
+   <Separator/>
+
+   <GridPane hgap="10" vgap="10">
+      <columnConstraints>
+         <ColumnConstraints halignment="RIGHT" minWidth="100"/>
+         <ColumnConstraints halignment="LEFT" minWidth="200"/>
+      </columnConstraints>
+
+      <Label text="Completar por ID:" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+      <TextField fx:id="completeByIdField" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+      <Button text="Completar tarea por ID" onAction="#onCompleteTaskByIdClick" GridPane.rowIndex="1" GridPane.columnIndex="1" />
+   </GridPane>
+
+   <Separator/>
+
+   <HBox spacing="10">
+      <Button text="Mostrar tarea más prioritaria" onAction="#onShowHighestPriorityTaskClick"/>
+      <Button text="Completar tarea más prioritaria" onAction="#onCompleteHighestPriorityTaskClick"/>
+   </HBox>
 
    <Separator/>
 
