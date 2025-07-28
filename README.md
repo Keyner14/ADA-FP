@@ -55,7 +55,7 @@ Este proyecto incluye una serie de pruebas utilizando **JUnit 5** para validar e
 Se pueden correr las pruebas de dos formas:
 
 1. **Desde IntelliJ IDEA**
-    - Navega a `src/test/java/com/example/ada1fp/tests/TaskManagerTest.java`
+    - Navega a `src/test/java/TaskManagerTest.java`
     - Haz clic derecho en la clase o método → `Run 'TaskManagerTest'`
 
 Las pruebas verifican:
