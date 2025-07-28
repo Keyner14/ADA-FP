@@ -45,3 +45,21 @@ cd ADA-FP
 - Buscar la clase **`HelloApplication.java`** 
 - Click derecho → **Run 'HelloApplication.main()'.**
 - La interfaz gráfica se abrirá.
+
+## 🧪 Cómo correr los tests
+
+Este proyecto incluye una serie de pruebas utilizando **JUnit 5** para validar el funcionamiento del Heap y el Árbol AVL.
+
+### ▶️ Ejecutar pruebas
+
+Se pueden correr las pruebas de dos formas:
+
+1. **Desde IntelliJ IDEA**
+    - Navega a `src/test/java/com/example/ada1fp/tests/TaskManagerTest.java`
+    - Haz clic derecho en la clase o método → `Run 'TaskManagerTest'`
+
+Las pruebas verifican:
+- Inserción y orden de prioridad en el Heap
+- Eliminación y mantenimiento de la estructura
+- Búsqueda eficiente en el AVL
+- Equilibrio automático del AVL tras inserciones
